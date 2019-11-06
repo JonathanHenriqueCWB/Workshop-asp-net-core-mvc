@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jony\\source\\repos\\Workshop-asp-net-core-mvc\\SalesWebMVC\\SalesWebMVC.csproj": {}
+    "C:\\Users\\Jony\\Desktop\\Workshop-asp-net-core-mvc\\SalesWebMVC\\SalesWebMVC.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jony\\source\\repos\\Workshop-asp-net-core-mvc\\SalesWebMVC\\SalesWebMVC.csproj": {
+    "C:\\Users\\Jony\\Desktop\\Workshop-asp-net-core-mvc\\SalesWebMVC\\SalesWebMVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jony\\source\\repos\\Workshop-asp-net-core-mvc\\SalesWebMVC\\SalesWebMVC.csproj",
+        "projectUniqueName": "C:\\Users\\Jony\\Desktop\\Workshop-asp-net-core-mvc\\SalesWebMVC\\SalesWebMVC.csproj",
         "projectName": "SalesWebMVC",
-        "projectPath": "C:\\Users\\Jony\\source\\repos\\Workshop-asp-net-core-mvc\\SalesWebMVC\\SalesWebMVC.csproj",
+        "projectPath": "C:\\Users\\Jony\\Desktop\\Workshop-asp-net-core-mvc\\SalesWebMVC\\SalesWebMVC.csproj",
         "packagesPath": "C:\\Users\\Jony\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jony\\source\\repos\\Workshop-asp-net-core-mvc\\SalesWebMVC\\obj\\",
+        "outputPath": "C:\\Users\\Jony\\Desktop\\Workshop-asp-net-core-mvc\\SalesWebMVC\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Jony\\AppData\\Roaming\\NuGet\\NuGet.Config",
