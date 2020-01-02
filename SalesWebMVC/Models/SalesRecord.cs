@@ -11,6 +11,7 @@ namespace SalesWebMVC.Models
         public int SalesRecordId { get; set; }
         public DateTime Date { get; set; }
         public double Amount { get; set; }
+        //Uma venda possue um status pendente, faturado ou cancelado
         public SaleStatus Status { get; set; }
         //Uma venda possue um vendedor
         public Seller Seller { get; set; }
@@ -20,9 +21,8 @@ namespace SalesWebMVC.Models
         {
 
         }
-        public SalesRecord(int salesRecordId, DateTime date, double amount, SaleStatus status, Seller seller)
+        public SalesRecord(DateTime date, double amount, SaleStatus status, Seller seller)
         {
-            SalesRecordId = salesRecordId;
             Date = date;
             Amount = amount;
             Status = status;

@@ -17,11 +17,9 @@ namespace SalesWebMVC.Models
         #region CONSTRUTORES
         public Departments()
         {
-
         }
-        public Departments(int id, string nome)
+        public Departments(string nome)
         {
-            Id = id;
             Nome = nome;
         }
         #endregion

@@ -20,11 +20,9 @@ namespace SalesWebMVC.Models
         #region CONSTRUTORES
         public Seller()
         {
-
         }
-        public Seller(int sellerId, string name, string email, double baseSalary, DateTime birthDate, Departments departments)
+        public Seller(string name, string email, double baseSalary, DateTime birthDate, Departments departments)
         {
-            SellerId = sellerId;
             Name = name;
             Email = email;
             BaseSalary = baseSalary;
