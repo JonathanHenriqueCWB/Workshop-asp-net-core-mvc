@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using SalesWebMVC.Models;
 using SalesWebMVC.Data;
+using SalesWebMVC.DAL;
 
 namespace SalesWebMVC
 {
@@ -34,6 +35,7 @@ namespace SalesWebMVC
             #endregion
             #region register services Seeding services
             services.AddScoped<SeedingService>();
+            services.AddScoped<SellerDAO>();
             #endregion
 
         }
