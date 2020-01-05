@@ -6,26 +6,25 @@ using System.Threading.Tasks;
 
 namespace SalesWebMVC.DAL
 {
-    public class SellerDAO
+    public class DepartmentsDAO
     {
         #region Constructor and context
         private readonly SalesWebMVCContext _context;
-        public SellerDAO(SalesWebMVCContext context)
+        public DepartmentsDAO(SalesWebMVCContext context)
         {
             _context = context;
         }
         #endregion
         #region List
-        public List<Seller> FindAll()
+        public List<Departments> FindAll()
         {
-            return _context.Seller.ToList();
+            return _context.Departments.ToList();
         }
         #endregion
-        #region Insert
-        public void Insert(Seller seller)
+        #region Find To Id
+        public Departments FindToId(int? id)
         {
-            _context.Seller.Add(seller);
-            _context.SaveChanges();
+            return _context.Departments.Find(id);
         }
         #endregion
     }

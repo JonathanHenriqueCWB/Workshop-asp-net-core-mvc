@@ -36,6 +36,7 @@ namespace SalesWebMVC
             #region register services Seeding services
             services.AddScoped<SeedingService>();
             services.AddScoped<SellerDAO>();
+            services.AddScoped<DepartmentsDAO>();
             #endregion
 
         }

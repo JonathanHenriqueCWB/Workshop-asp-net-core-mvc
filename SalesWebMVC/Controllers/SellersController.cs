@@ -1,19 +1,47 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SalesWebMVC.Models;
 using SalesWebMVC.DAL;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SalesWebMVC.Controllers
 {
     public class SellersController : Controller
     {
+        #region Construtor
         private readonly SellerDAO _selerDAO;
-        public SellersController(SellerDAO sellerDAO)
+        private readonly DepartmentsDAO _departmentsDAO;
+        public SellersController(SellerDAO sellerDAO, DepartmentsDAO departmentsDAO)
         {
             _selerDAO = sellerDAO;
+            _departmentsDAO = departmentsDAO;
         }
+        #endregion
+        #region Index
         public IActionResult Index()
         {
             return View(_selerDAO.FindAll());
         }
+        #endregion
+        #region Create
+        public IActionResult Create()
+        {
+            //Manda lista para poder selecionar uma departamento no cadastro
+            ViewBag.Departments = new SelectList(_departmentsDAO.FindAll(), "Id", "Nome");
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken] //Previnir ataques CSRF
+        public IActionResult Create(Seller seller, int drpDepartments)
+        {   
+            //Lista para possívelmente alterar um seller (vendedor)
+            ViewBag.Departments = new SelectList(_departmentsDAO.FindAll(), "Id", "Nome");
+            //Popula o objeto com o departamento
+            seller.Departments = _departmentsDAO.FindToId(drpDepartments);
+            //Chamada DAO
+            _selerDAO.Insert(seller);
+
+            return RedirectToAction(nameof(Index));
+        }
+        #endregion
     }
 }
