@@ -18,7 +18,7 @@ namespace SalesWebMVC.DAL
         #region List
         public List<Departments> FindAll()
         {
-            return _context.Departments.ToList();
+            return _context.Departments.OrderBy(x => x.Nome).ToList();
         }
         #endregion
         #region Find To Id

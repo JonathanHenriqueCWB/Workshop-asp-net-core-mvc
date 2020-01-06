@@ -28,5 +28,19 @@ namespace SalesWebMVC.DAL
             _context.SaveChanges();
         }
         #endregion
+        #region FindById
+        public Seller FindById(int id)
+        {
+            return _context.Seller.FirstOrDefault(x => x.SellerId == id);
+        }
+        #endregion
+        #region Remove
+        public void Remove(int id)
+        {
+            var obj = _context.Seller.Find(id);
+            _context.Seller.Remove(obj);
+            _context.SaveChanges();
+        }
+        #endregion
     }
 }
