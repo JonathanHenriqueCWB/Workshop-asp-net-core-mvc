@@ -1,8 +1,7 @@
 ﻿using SalesWebMVC.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace SalesWebMVC.DAL
 {
@@ -31,7 +30,7 @@ namespace SalesWebMVC.DAL
         #region FindById
         public Seller FindById(int id)
         {
-            return _context.Seller.FirstOrDefault(x => x.SellerId == id);
+            return _context.Seller.Include(obj => obj.Departments).FirstOrDefault(x => x.SellerId == id);
         }
         #endregion
         #region Remove

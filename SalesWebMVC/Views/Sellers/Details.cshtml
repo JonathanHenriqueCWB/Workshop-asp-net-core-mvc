@@ -1,10 +1,10 @@
 ﻿@model Seller
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Details";
 }
 
 <h3>@ViewData["Title"]</h3>
-<h4>Are your sure you want to delete this?</h4>
+
 <div>
     <h4>Seller</h4>
     <hr />
@@ -20,11 +20,13 @@
 
         <dt>@Html.DisplayNameFor(model => model.BaseSalary)</dt>
         <dd>@Html.DisplayFor(model => model.BaseSalary)</dd>
-    </dl>
 
-    <form method="post">
-        <input type="hidden" asp-for="SellerId" />
-        <input type="submit" class="btn btn-danger" value="Delete"/>
-        <a asp-action="Index" class="btn btn-primary">Back to List</a>
-    </form>
+        <dt>@Html.DisplayNameFor(model => model.Departments)</dt>
+        <dd>@Html.DisplayFor(model => model.Departments.Nome)</dd>
+    </dl>
 </div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.SellerId" class="btn btn-warning">Edit</a>
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+</div>
+

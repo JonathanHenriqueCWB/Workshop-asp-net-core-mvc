@@ -68,5 +68,24 @@ namespace SalesWebMVC.Controllers
             return RedirectToAction(nameof(Index));
         }
         #endregion
+        #region Datails
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                //Por id ser opcional deve incluir o value junto
+                var obj = _selerDAO.FindById(id.Value);
+                if (obj == null)
+                {
+                    return NotFound();
+                }
+                return View(obj);
+            }
+        }
+        #endregion
     }
 }

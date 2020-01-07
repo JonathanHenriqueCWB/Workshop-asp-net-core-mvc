@@ -298,3 +298,4 @@ C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netco
 C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\Razor\Views\Sellers\Index.cshtml.g.cs
 C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\Razor\Views\Sellers\Create.cshtml.g.cs
 C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\Razor\Views\Sellers\Delete.cshtml.g.cs
+C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\Razor\Views\Sellers\Details.cshtml.g.cs
