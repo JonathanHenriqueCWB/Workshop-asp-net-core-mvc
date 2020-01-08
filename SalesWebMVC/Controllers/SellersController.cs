@@ -2,6 +2,8 @@
 using SalesWebMVC.Models;
 using SalesWebMVC.DAL;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using SalesWebMVC.DAL.Exceptions;
 
 namespace SalesWebMVC.Controllers
 {
@@ -87,5 +89,37 @@ namespace SalesWebMVC.Controllers
             }
         }
         #endregion
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var obj = _selerDAO.FindById(id.Value);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            ViewBag.Departments = new SelectList(_departmentsDAO.FindAll(), "Id", "Nome");
+            return View(obj);
+        }
+        [HttpPost]
+        public IActionResult Edit(Seller obj, int drpDepartments)
+        {
+            try{
+
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (DbConcurrencyException)
+            {
+                return BadRequest();
+            }
+            obj.Departments = _departmentsDAO.FindToId(drpDepartments);
+            _selerDAO.Update(obj);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

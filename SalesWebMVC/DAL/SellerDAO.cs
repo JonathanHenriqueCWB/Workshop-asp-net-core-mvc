@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using SalesWebMVC.DAL.Exceptions;
 
 namespace SalesWebMVC.DAL
 {
@@ -41,5 +42,23 @@ namespace SalesWebMVC.DAL
             _context.SaveChanges();
         }
         #endregion
+        public void Update(Seller obj)
+        {
+            if (!_context.Seller.Any(x => x.SellerId == obj.SellerId))
+            {
+                throw new NotFoundException("ID Not Found!");
+            }
+            try
+            {
+                _context.Update(obj);
+                _context.SaveChanges();
+            }
+            catch(DbUpdateConcurrencyException e)
+            {
+                throw new DbConcurrencyException(e.Message);
+            }
+
+        }
+
     }
 }
