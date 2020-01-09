@@ -11,19 +11,21 @@ namespace SalesWebMVC.Controllers
 {
     public class DepartmentsController : Controller
     {
+        #region Construtor
         private readonly SalesWebMVCContext _context;
 
         public DepartmentsController(SalesWebMVCContext context)
         {
             _context = context;
         }
-
-        // GET: Departments
+        #endregion
+        #region Index
         public async Task<IActionResult> Index()
         {
             return View(await _context.Departments.ToListAsync());
         }
-
+        #endregion
+        #region Details
         // GET: Departments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -41,7 +43,8 @@ namespace SalesWebMVC.Controllers
 
             return View(departments);
         }
-
+        #endregion
+        #region Create
         // GET: Departments/Create
         public IActionResult Create()
         {
@@ -63,7 +66,8 @@ namespace SalesWebMVC.Controllers
             }
             return View(departments);
         }
-
+        #endregion
+        #region Edit
         // GET: Departments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -114,7 +118,8 @@ namespace SalesWebMVC.Controllers
             }
             return View(departments);
         }
-
+        #endregion
+        #region Delete
         // GET: Departments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -143,10 +148,12 @@ namespace SalesWebMVC.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        #endregion
+        #region DepartmentsExists
         private bool DepartmentsExists(int id)
         {
             return _context.Departments.Any(e => e.Id == id);
         }
+        #endregion
     }
 }

@@ -4,6 +4,8 @@ using SalesWebMVC.DAL;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using SalesWebMVC.DAL.Exceptions;
+using System.Diagnostics;
+using System;
 
 namespace SalesWebMVC.Controllers
 {
@@ -34,7 +36,7 @@ namespace SalesWebMVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken] //Previnir ataques CSRF
         public IActionResult Create(Seller seller, int drpDepartments)
-        {   
+        {
             //Lista para possívelmente alterar um seller (vendedor)
             ViewBag.Departments = new SelectList(_departmentsDAO.FindAll(), "Id", "Nome");
             //Popula o objeto com o departamento
@@ -45,23 +47,38 @@ namespace SalesWebMVC.Controllers
             return RedirectToAction(nameof(Index));
         }
         #endregion
+        #region Details
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Error), new { message = "Id not provided" });
+            }
+
+            var obj = _selerDAO.FindById(id.Value);
+            if (obj == null)
+            {
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
+            }
+
+            return View(obj);
+        }
+        #endregion
         #region Delete
         public IActionResult Delete(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
-            else
+
+            //Por id ser opcional deve incluir o value junto
+            var obj = _selerDAO.FindById(id.Value);
+            if (obj == null)
             {
-                //Por id ser opcional deve incluir o value junto
-                var obj = _selerDAO.FindById(id.Value);
-                if (obj == null)
-                {
-                    return NotFound();
-                }
-                return View(obj);
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
+            return View();
         }
         [HttpPost]
         public IActionResult Delete(int id)
@@ -70,35 +87,17 @@ namespace SalesWebMVC.Controllers
             return RedirectToAction(nameof(Index));
         }
         #endregion
-        #region Datails
-        public IActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                //Por id ser opcional deve incluir o value junto
-                var obj = _selerDAO.FindById(id.Value);
-                if (obj == null)
-                {
-                    return NotFound();
-                }
-                return View(obj);
-            }
-        }
-        #endregion
+        #region Edit
         public IActionResult Edit(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
             var obj = _selerDAO.FindById(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
             ViewBag.Departments = new SelectList(_departmentsDAO.FindAll(), "Id", "Nome");
             return View(obj);
@@ -106,20 +105,28 @@ namespace SalesWebMVC.Controllers
         [HttpPost]
         public IActionResult Edit(Seller obj, int drpDepartments)
         {
-            try{
-
-            }
-            catch (NotFoundException)
+            try
             {
-                return NotFound();
+                obj.Departments = _departmentsDAO.FindToId(drpDepartments);
+                _selerDAO.Update(obj);
+                return RedirectToAction(nameof(Index));
             }
-            catch (DbConcurrencyException)
+            catch (ApplicationException e)
             {
-                return BadRequest();
+                return RedirectToAction(nameof(Error), new { message = e.Message });
             }
-            obj.Departments = _departmentsDAO.FindToId(drpDepartments);
-            _selerDAO.Update(obj);
-            return RedirectToAction(nameof(Index));
         }
+        #endregion
+        #region Error
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
+        }
+        #endregion
     }
 }
