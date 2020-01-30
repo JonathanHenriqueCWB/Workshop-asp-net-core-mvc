@@ -33,6 +33,8 @@ namespace SalesWebMVC.Controllers
             ViewBag.Departments = new SelectList(_departmentsDAO.FindAll(), "Id", "Nome");
             return View();
         }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken] //Previnir ataques CSRF
         public IActionResult Create(Seller seller, int drpDepartments)
@@ -78,7 +80,7 @@ namespace SalesWebMVC.Controllers
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
-            return View();
+            return View(obj);
         }
         [HttpPost]
         public IActionResult Delete(int id)
@@ -118,6 +120,10 @@ namespace SalesWebMVC.Controllers
         }
         #endregion
         #region Error
+        /*Método retorna a view de erro tipada errorViewModel 
+        criada automaticamente na criação do projeto
+        Será chamado pelos demais métodos acima passando como
+        parametro um msg de erro personalizada*/
         public IActionResult Error(string message)
         {
             var viewModel = new ErrorViewModel
