@@ -34,19 +34,21 @@ namespace SalesWebMVC.Controllers
             return View();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken] //Previnir ataques CSRF
         public IActionResult Create(Seller seller, int drpDepartments)
         {
-            //Lista para possívelmente alterar um seller (vendedor)
-            ViewBag.Departments = new SelectList(_departmentsDAO.FindAll(), "Id", "Nome");
-            //Popula o objeto com o departamento
-            seller.Departments = _departmentsDAO.FindToId(drpDepartments);
-            //Chamada DAO
-            _selerDAO.Insert(seller);
+            //Validação por parte do servidor
+            if (ModelState.IsValid)
+            {
+                //Popula o objeto com o departamento
+                seller.Departments = _departmentsDAO.FindToId(drpDepartments);
+                //Chamada DAO
+                _selerDAO.Insert(seller);
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
         }
         #endregion
         #region Details
@@ -107,16 +109,21 @@ namespace SalesWebMVC.Controllers
         [HttpPost]
         public IActionResult Edit(Seller obj, int drpDepartments)
         {
-            try
+            //Validação por parte do servidor
+            if (ModelState.IsValid)
             {
-                obj.Departments = _departmentsDAO.FindToId(drpDepartments);
-                _selerDAO.Update(obj);
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    obj.Departments = _departmentsDAO.FindToId(drpDepartments);
+                    _selerDAO.Update(obj);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (ApplicationException e)
+                {
+                    return RedirectToAction(nameof(Error), new { message = e.Message });
+                }
             }
-            catch (ApplicationException e)
-            {
-                return RedirectToAction(nameof(Error), new { message = e.Message });
-            }
+            return View();
         }
         #endregion
         #region Error

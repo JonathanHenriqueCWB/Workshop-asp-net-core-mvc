@@ -16,18 +16,25 @@
             <div class="form-group">
                 <label asp-for="Name" class="col-form-label"></label>
                 <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Email" class="col-form-label"></label>
                 <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="BirthDate" class="col-form-label"></label>
                 <input asp-for="BirthDate" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="BaseSalary" class="col-form-label"></label>
                 <input asp-for="BaseSalary" class="form-control" />
+                <span asp-validation-for="BaseSalary" class="text-danger"></span>
             </div>
 
             <div id="Departments" class="form-group">
@@ -45,4 +52,10 @@
         </form>
     </div>
 </div>
+
+<!--Anotação para validação do javascript no lado do cliente-->
+@section Scripts{
+    @{await Html.RenderPartialAsync("_validationScriptsPartial"); }
+}
+
 
