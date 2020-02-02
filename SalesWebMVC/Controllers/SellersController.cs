@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using SalesWebMVC.DAL.Exceptions;
 using System.Diagnostics;
 using System;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace SalesWebMVC.Controllers
 {
@@ -21,30 +23,31 @@ namespace SalesWebMVC.Controllers
         }
         #endregion
         #region Index
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_selerDAO.FindAll());
+            var list = await _selerDAO.FindAllAsync();
+            return View(list);
         }
         #endregion
         #region Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             //Manda lista para poder selecionar uma departamento no cadastro
-            ViewBag.Departments = new SelectList(_departmentsDAO.FindAll(), "Id", "Nome");
+            ViewBag.Departments = new SelectList(await _departmentsDAO.FindAllAsync(), "Id", "Nome");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken] //Previnir ataques CSRF
-        public IActionResult Create(Seller seller, int drpDepartments)
+        public async Task<IActionResult> Create(Seller seller, int drpDepartments)
         {
             //Validação por parte do servidor
             if (ModelState.IsValid)
             {
                 //Popula o objeto com o departamento
-                seller.Departments = _departmentsDAO.FindToId(drpDepartments);
+                seller.Departments = await _departmentsDAO.FindToIdAsync(drpDepartments);
                 //Chamada DAO
-                _selerDAO.Insert(seller);
+                await _selerDAO.InsertAsync(seller);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -52,14 +55,14 @@ namespace SalesWebMVC.Controllers
         }
         #endregion
         #region Details
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
-            var obj = _selerDAO.FindById(id.Value);
+            var obj = await _selerDAO.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
@@ -69,7 +72,7 @@ namespace SalesWebMVC.Controllers
         }
         #endregion
         #region Delete
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -77,7 +80,8 @@ namespace SalesWebMVC.Controllers
             }
 
             //Por id ser opcional deve incluir o value junto
-            var obj = _selerDAO.FindById(id.Value);
+            var obj = await _selerDAO.FindByIdAsync(id.Value);
+
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
@@ -85,37 +89,37 @@ namespace SalesWebMVC.Controllers
             return View(obj);
         }
         [HttpPost]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _selerDAO.Remove(id);
+            await _selerDAO.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
         }
         #endregion
         #region Edit
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
-            var obj = _selerDAO.FindById(id.Value);
+            var obj = await _selerDAO.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
-            ViewBag.Departments = new SelectList(_departmentsDAO.FindAll(), "Id", "Nome");
+            ViewBag.Departments = new SelectList(await _departmentsDAO.FindAllAsync(), "Id", "Nome");
             return View(obj);
         }
         [HttpPost]
-        public IActionResult Edit(Seller obj, int drpDepartments)
+        public async Task<IActionResult> Edit(Seller obj, int drpDepartments)
         {
             //Validação por parte do servidor
             if (ModelState.IsValid)
             {
                 try
                 {
-                    obj.Departments = _departmentsDAO.FindToId(drpDepartments);
-                    _selerDAO.Update(obj);
+                    obj.Departments = await _departmentsDAO.FindToIdAsync(drpDepartments);
+                    await _selerDAO.UpdateAsync(obj);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (ApplicationException e)

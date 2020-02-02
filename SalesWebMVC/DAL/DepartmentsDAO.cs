@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace SalesWebMVC.DAL
 {
@@ -16,15 +17,15 @@ namespace SalesWebMVC.DAL
         }
         #endregion
         #region List
-        public List<Departments> FindAll()
+        public async Task<List<Departments>> FindAllAsync()
         {
-            return _context.Departments.OrderBy(x => x.Nome).ToList();
+            return await _context.Departments.OrderBy(x => x.Nome).ToListAsync();
         }
         #endregion
         #region Find To Id
-        public Departments FindToId(int? id)
+        public async Task<Departments> FindToIdAsync(int? id)
         {
-            return _context.Departments.Find(id);
+            return await _context.Departments.FindAsync(id);
         }
         #endregion
     }

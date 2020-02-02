@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using SalesWebMVC.DAL.Exceptions;
+using System.Threading.Tasks;
 
 namespace SalesWebMVC.DAL
 {
@@ -16,42 +17,44 @@ namespace SalesWebMVC.DAL
         }
         #endregion
         #region List
-        public List<Seller> FindAll()
+        public async Task<List<Seller>> FindAllAsync()
         {
-            return _context.Seller.ToList();
+            return await _context.Seller.ToListAsync();
         }
         #endregion
         #region Insert
-        public void Insert(Seller seller)
+        public async Task InsertAsync(Seller seller)
         {
             _context.Seller.Add(seller);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
         #endregion
         #region FindById
-        public Seller FindById(int id)
+        public async Task<Seller> FindByIdAsync(int id)
         {
-            return _context.Seller.Include(obj => obj.Departments).FirstOrDefault(x => x.SellerId == id);
+            return await _context.Seller.Include(obj => obj.Departments).FirstOrDefaultAsync(x => x.SellerId == id);
         }
         #endregion
         #region Remove
-        public void Remove(int id)
+        public async Task RemoveAsync(int id)
         {
-            var obj = _context.Seller.Find(id);
+            var obj = await _context.Seller.FindAsync(id);
             _context.Seller.Remove(obj);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
         #endregion
-        public void Update(Seller obj)
+        #region Update
+        public async Task UpdateAsync(Seller obj)
         {
-            if (!_context.Seller.Any(x => x.SellerId == obj.SellerId))
+            bool hasAny = await _context.Seller.AnyAsync(x => x.SellerId == obj.SellerId);
+            if (!hasAny)
             {
                 throw new NotFoundException("ID Not Found!");
             }
             try
             {
                 _context.Update(obj);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch(DbUpdateConcurrencyException e)
             {
@@ -59,6 +62,7 @@ namespace SalesWebMVC.DAL
             }
 
         }
+        #endregion
 
     }
 }
