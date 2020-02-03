@@ -19,7 +19,7 @@ namespace SalesWebMVC.DAL
         #region List
         public async Task<List<Seller>> FindAllAsync()
         {
-            return await _context.Seller.ToListAsync();
+            return await _context.Seller.OrderBy(x=> x.Name).ToListAsync();
         }
         #endregion
         #region Insert
@@ -38,9 +38,22 @@ namespace SalesWebMVC.DAL
         #region Remove
         public async Task RemoveAsync(int id)
         {
-            var obj = await _context.Seller.FindAsync(id);
-            _context.Seller.Remove(obj);
-            await _context.SaveChangesAsync();
+            /*
+             * Quando ocorre uma violação de integridade refencial o 
+             * entity framework lança uma exeção DbUpdateException 
+            */
+
+            try
+            {
+                var obj = await _context.Seller.FindAsync(id);
+                _context.Seller.Remove(obj);
+                await _context.SaveChangesAsync();
+            }
+            catch(DbUpdateException e)
+            {
+                //Lançamento de uma exeção personalizada criada (IntegrityException)
+                throw new IntegrityException("Can't delete seller because he/she has salles");
+            }
         }
         #endregion
         #region Update

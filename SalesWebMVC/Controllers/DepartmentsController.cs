@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SalesWebMVC.DAL;
 using SalesWebMVC.Models;
 
 namespace SalesWebMVC.Controllers
@@ -12,147 +14,127 @@ namespace SalesWebMVC.Controllers
     public class DepartmentsController : Controller
     {
         #region Construtor
-        private readonly SalesWebMVCContext _context;
+        private readonly DepartmentsDAO _departmentsDAO;
 
-        public DepartmentsController(SalesWebMVCContext context)
+        public DepartmentsController(DepartmentsDAO departmentsDAO)
         {
-            _context = context;
+            _departmentsDAO = departmentsDAO;
         }
         #endregion
         #region Index
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Departments.ToListAsync());
-        }
-        #endregion
-        #region Details
-        // GET: Departments/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var departments = await _context.Departments
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (departments == null)
-            {
-                return NotFound();
-            }
-
-            return View(departments);
+            return View(await _departmentsDAO.FindAllAsync());
         }
         #endregion
         #region Create
-        // GET: Departments/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Departments/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome")] Departments departments)
+        public async Task<IActionResult> Create(Departments departments)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(departments);
-                await _context.SaveChangesAsync();
+                await _departmentsDAO.CreateAsync(departments);
                 return RedirectToAction(nameof(Index));
             }
             return View(departments);
         }
         #endregion
-        #region Edit
+        #region Details
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Error), new { message = "Id not provided" });
+            }
+
+            var departments = await _departmentsDAO.FindToIdAsync(id.Value);
+            if (departments == null)
+            {
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
+            }
+
+            return View(departments);
+        }
+        #endregion
+        #region Update
         // GET: Departments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
-            var departments = await _context.Departments.FindAsync(id);
+            var departments = await _departmentsDAO.FindToIdAsync(id);
             if (departments == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
             return View(departments);
         }
-
-        // POST: Departments/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome")] Departments departments)
+        public async Task<IActionResult> Edit( Departments departments)
         {
-            if (id != departments.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(departments);
-                    await _context.SaveChangesAsync();
+                    await _departmentsDAO.UpateAsync(departments);
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DepartmentsExists(departments.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return NotFound();
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(departments);
+            return View();
         }
         #endregion
         #region Delete
-        // GET: Departments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
-            var departments = await _context.Departments
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (departments == null)
+            var obj = await _departmentsDAO.FindToIdAsync(id.Value);
+            if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
 
-            return View(departments);
+            return View(obj);
         }
 
-        // POST: Departments/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var departments = await _context.Departments.FindAsync(id);
-            _context.Departments.Remove(departments);
-            await _context.SaveChangesAsync();
+            await _departmentsDAO.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
         }
         #endregion
-        #region DepartmentsExists
-        private bool DepartmentsExists(int id)
+        #region Error
+        /*Método retorna a view de erro tipada errorViewModel 
+        criada automaticamente na criação do projeto
+        Será chamado pelos demais métodos acima passando como
+        parametro um msg de erro personalizada*/
+        public IActionResult Error(string message)
         {
-            return _context.Departments.Any(e => e.Id == id);
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
         }
         #endregion
     }

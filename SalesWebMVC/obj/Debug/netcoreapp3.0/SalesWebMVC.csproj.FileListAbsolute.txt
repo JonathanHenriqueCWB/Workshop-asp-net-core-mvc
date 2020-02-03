@@ -44,7 +44,6 @@ C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\bin\Debug\netco
 C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\bin\Debug\netcoreapp3.0\SalesWebMVC.pdb
 C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\bin\Debug\netcoreapp3.0\SalesWebMVC.Views.dll
 C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\bin\Debug\netcoreapp3.0\SalesWebMVC.Views.pdb
-C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\SalesWebMVC.csprojAssemblyReference.cache
 C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\staticwebassets\SalesWebMVC.StaticWebAssets.Manifest.cache
 C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\staticwebassets\SalesWebMVC.StaticWebAssets.xml
 C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\SalesWebMVC.RazorAssemblyInfo.cache
@@ -300,3 +299,4 @@ C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netco
 C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\Razor\Views\Sellers\Delete.cshtml.g.cs
 C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\Razor\Views\Sellers\Details.cshtml.g.cs
 C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\Razor\Views\Sellers\Edit.cshtml.g.cs
+C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\SalesWebMVC.csprojAssemblyReference.cache

@@ -38,7 +38,7 @@ namespace SalesWebMVC.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken] //Previnir ataques CSRF
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Seller seller, int drpDepartments)
         {
             //Validação por parte do servidor
@@ -89,10 +89,19 @@ namespace SalesWebMVC.Controllers
             return View(obj);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await _selerDAO.RemoveAsync(id);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _selerDAO.RemoveAsync(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch(IntegrityException e)
+            {
+                return RedirectToAction(nameof(Error), new { message = e.Message });
+            }
+
         }
         #endregion
         #region Edit
