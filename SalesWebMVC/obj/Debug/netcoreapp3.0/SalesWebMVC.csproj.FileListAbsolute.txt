@@ -300,3 +300,6 @@ C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netco
 C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\Razor\Views\Sellers\Details.cshtml.g.cs
 C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\Razor\Views\Sellers\Edit.cshtml.g.cs
 C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\SalesWebMVC.csprojAssemblyReference.cache
+C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\Razor\Views\SallesRecords\Index.cshtml.g.cs
+C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\Razor\Views\SallesRecords\SimpleSearch.cshtml.g.cs
+C:\Users\Jony\source\repos\Workshop-asp-net-core-mvc\SalesWebMVC\obj\Debug\netcoreapp3.0\Razor\Views\SallesRecords\GroupSearch.cshtml.g.cs
