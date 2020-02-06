@@ -34,11 +34,34 @@ namespace SalesWebMVC.Data
             SalesRecord sr1 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Billed, s1);
             SalesRecord sr2 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Canceled, s2);
             SalesRecord sr3 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Pending, s2);
+            SalesRecord sr4 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Pending, s2);
+            SalesRecord sr5 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Pending, s2);
+            SalesRecord sr6 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Pending, s2);
+            SalesRecord sr7 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Pending, s2);
+            SalesRecord sr8 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Pending, s2);
+            SalesRecord sr9 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Canceled, s2);
+            SalesRecord sr10 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Pending, s1);
+            SalesRecord sr11 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Billed, s2);
+            SalesRecord sr12 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Billed, s1);
+            SalesRecord sr13 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Billed, s1);
+            SalesRecord sr14 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Pending, s2);
+            SalesRecord sr15 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Canceled, s1);
+            SalesRecord sr16 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Pending, s2);
+            SalesRecord sr17 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Pending, s1);
+            SalesRecord sr18 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Canceled, s2);
+            SalesRecord sr19 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Billed, s1);
+            SalesRecord sr20 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Pending, s2);
+            SalesRecord sr21 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Pending, s1);
+            SalesRecord sr22 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Billed, s2);
+            SalesRecord sr23 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Pending, s1);
+            SalesRecord sr24 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Billed, s2);
+            SalesRecord sr25 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Pending, s1);
+            SalesRecord sr26 = new SalesRecord(DateTime.Now, 11000, SaleStatus.Billed, s2);
 
             //Grava diversos objetos de uma so vez
             _context.Departments.AddRange(d1, d2, d3);
             _context.Seller.AddRange(s1, s2);
-            _context.SalesRecord.AddRange(sr1, sr2, sr3);
+            _context.SalesRecord.AddRange(sr1, sr2, sr3,sr4, sr5, sr6, sr7, sr8, sr9, sr10, sr11, sr12, sr13, sr14, sr15, sr16, sr17, sr18, sr19, sr20, sr21, sr22, sr23, sr24, sr25, sr26);
             _context.SaveChanges();
         }
     }
